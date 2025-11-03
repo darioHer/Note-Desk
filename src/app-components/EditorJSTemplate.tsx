@@ -8,27 +8,29 @@ import Quote from '@editorjs/quote';
 // @ts-ignore
 import Marker from '@editorjs/marker';
 
-export default React.memo((props: any) => {
+const EditorJSTemplate: React.FC<any> = (props) => {
+    const holderRef = React.useRef<HTMLDivElement>(null);
     const editorRef = React.useRef<EditorJS | null>(null);
-    const holderRef = React.useRef<HTMLDivElement | null>(null);
 
     React.useEffect(() => {
-        if (editorRef.current || !holderRef.current) return;
-
-        editorRef.current = new EditorJS({
-            holder: holderRef.current,     // ✅ ref, no id
-            autofocus: true,
-            placeholder: 'Escribe aquí…',
-            tools: {
-                header: Header,
-                linkTool: Link,
-                checklist: CheckList,
-                list: List,
-                quote: Quote,
-                marker: Marker,
-            },
-            onChange(api, event) { props.onChange?.(api, event); },
-        });
+        if (holderRef.current) {
+            editorRef.current = new EditorJS({
+                holder: holderRef.current,
+                autofocus: true,
+                placeholder: 'Escribe aquí…',
+                tools: {
+                    header: Header,
+                    linkTool: Link,
+                    checklist: CheckList,
+                    list: List,
+                    quote: Quote,
+                    marker: Marker,
+                },
+                onChange(api, event) {
+                    props.onChange?.(api, event);
+                },
+            });
+        }
 
         return () => {
             editorRef.current?.destroy?.();
@@ -41,7 +43,7 @@ export default React.memo((props: any) => {
             ref={holderRef}
             className="
         app-no-drag         
-        h-[calc(100vh-32px)]asdasd
+        h-[calc(100vh-32px)]
         w-full
         overflow-auto
         p-4
@@ -53,4 +55,6 @@ export default React.memo((props: any) => {
       "
         />
     );
-});
+};
+
+export default React.memo(EditorJSTemplate);

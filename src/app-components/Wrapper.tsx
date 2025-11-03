@@ -6,6 +6,7 @@ import {
 
 import React from 'react'
 import { WindowButtons } from "../assets/SharedComponents";
+import Editor from "./Editor";
 
 export default React.memo((props: any) => {
     return (
@@ -26,6 +27,8 @@ export default React.memo((props: any) => {
 
                         
                     </div>
+
+                    <Editor/>
 
                 </ResizablePanel >
             </ResizablePanelGroup>
