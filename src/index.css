@@ -136,3 +136,8 @@ body {
   user-select: none;
   -webkit-app-region: drag;
 }
+
+.app-dragger div {
+  -webkit-app-region: none !important;
+
+}

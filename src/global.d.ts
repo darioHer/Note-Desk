@@ -1,3 +1,4 @@
+import { IRenderer } from "./preload";
 import type { INoteData } from "./shared/types";
 
 declare module "*.css" {
@@ -18,4 +19,11 @@ declare module "*.svg" {
 }
 
 export { };
+
+
+declare global {
+    interface Window {
+        electron: IRenderer
+    }
+}
 
