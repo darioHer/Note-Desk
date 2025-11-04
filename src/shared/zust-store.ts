@@ -1,21 +1,27 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { IMainState } from './types'
 // import type {} from '@redux-devtools/extension' // required for devtools typing
 
-interface BearState {
-    bears: number
-    increase: (by: number) => void
-}
-
-const useBearStore = create<BearState>()(
+export const useMainStore = create<IMainState>()(
 
     persist(
         (set) => ({
-            bears: 0,
-            increase: (by) => set((state) => ({ bears: state.bears + by })),
+            active_note: null as any,
+            set_state: (title, value) => {
+                switch (title) {
+                    case 'active_note':
+                        set((state) => ({ active_note: value }));
+
+                        break;
+
+                    default:
+                        break;
+                }
+            },
         }),
         {
-            name: 'bear-storage',
+            name: 'app-main-state',
         },
 
     ),
