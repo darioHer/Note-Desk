@@ -14,7 +14,7 @@ export interface INoteData {
 
 export type TNote = {
     time: number,
-    blocks: []
+    blocks: TNoteBlock[]
     version:string
 
 }

@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { set_note as db_set_note } from './database/db';
+import { set_note as db_set_note, get_all_notes } from './database/db';
 import type { INoteData } from './shared/types';
 
 // Forge Webpack entries
@@ -22,7 +22,15 @@ const createWindow = (): void => {
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   if (process.platform === 'darwin') mainWindow.setWindowButtonVisibility(true);
+
   mainWindow.webContents.openDevTools();
+
+  get_all_notes((data: INoteData[]) => {
+    mainWindow.webContents.send('onstart-notes-data', data);
+  });
+
+ 
+  
 
   // Ventana
   ipcMain.on('close-app', () => mainWindow.close());
@@ -33,6 +41,7 @@ const createWindow = (): void => {
 
   // Notas (SQLite)
   ipcMain.handle('set-note', async (_ev, argz: INoteData) => {
+    //eval.sender.send()
     return await new Promise<INoteData[]>((res, rej) => {
       try {
         db_set_note(argz, (rows: INoteData[]) => res(rows));
