@@ -22,7 +22,7 @@ export const userFriendlyTime = (t_stamp: number) => {
 };
 
 export const sectionze_notes = (notes: INoteData[]) => {
-    // NO mutar: crear copias con note parseado seguro
+    
     const parsed_notes: INoteData[] = notes.map((n) => {
         let parsed: TNote | null = null;
 
